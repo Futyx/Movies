@@ -33,6 +33,23 @@ class Movie extends Model
 
     public function countries(){
 
-        return $this->hasmany(MovieCountry::class);
+        return $this->hasmanythr(MovieCountry::class);
     }
+    public function casts(){
+
+        return $this->hasmany(Cast::class);
+    }
+   
+
+    public function actores(){
+
+        return $this->hasManyThrough(Actor::class,Cast::class);
+
+    }
+
+    
+
+    
+
+
 }

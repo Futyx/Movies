@@ -2,6 +2,8 @@
 
 namespace App\Console\Commands;
 
+use App\Models\Actor;
+use App\Models\Cast;
 use App\Models\Genre;
 use App\Models\Movie;
 use App\Models\MovieGenre;
@@ -81,6 +83,25 @@ class InsertMovies extends Command
                     'movie_id' => $createdMovies->id,
                     'image' => $imagePath
                 ]);
+            }
+
+
+            foreach($movie['casts'] as $cast){
+                $actores = Cast::get($cast['actores']);
+
+                $createdCasts= Cast::create([
+                    'name' => $cast->name,
+                    'role' => $cast->role
+                ]);
+                 foreach ($cast['actores'] as $actor){
+
+                    Actor::create([
+
+                        'movie-id'=>$createdMovies->id,
+                        'cast-id' => $createdCasts->id
+                    ]);
+                 }
+
             }
         }
 
