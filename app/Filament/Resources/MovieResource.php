@@ -18,7 +18,11 @@ use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
+use Filament\Support\Enums\Alignment;
+use Filament\Support\Enums\FontFamily;
+use Filament\Support\Enums\FontWeight;
 use Filament\Tables;
+use Filament\Tables\Columns\ColumnGroup;
 use Filament\Tables\Columns\ImageColumn;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
@@ -42,11 +46,11 @@ class MovieResource extends Resource
                         TextInput::make('title')->required(),
                         TextInput::make('year')->numeric(),
                         Select::make('country')
-                        ->options(Movie::get('country')),
+                            ->options(Movie::get('country')),
                         TextInput::make('imdb_rating'),
                         FileUpload::make('poster')->image()->nullable(),
                         TextInput::make('images.image')->nullable(),
-                        
+
 
 
                     ])->columns(3)
@@ -57,23 +61,49 @@ class MovieResource extends Resource
     public static function table(Table $table): Table
     {
         return $table
+
+
             ->columns([
+                
                 ImageColumn::make('poster')
                     ->circular()
                     ->defaultImageUrl(url('/.png')),
-                
+
                 TextColumn::make('title')
-                    ->searchable(),
-                TextColumn::make('year')   
                     ->searchable()
-                    ->sortable(),
-                TextColumn::make('country')
-                    ->searchable(),
+                    ->fontFamily(FontFamily::Mono)
+                    ->alignment(Alignment::Center),
+                TextColumn::make('year')
+                    ->searchable()
+                    ->sortable()
+                    ->fontFamily(FontFamily::Mono)
+                    ->alignment(Alignment::Center),
                 TextColumn::make('genres.name')
-                    ->searchable(),
-                TextColumn::make('imdb_rating')
-                    ->sortable(),
+                    ->searchable()
+                    ->wrap()
+                    ->fontFamily(FontFamily::Mono)
+                    ->alignment(Alignment::Center),
+                ColumnGroup::make('More Detail', [
+                    TextColumn::make('country')
+                        ->searchable()
+                        ->grow(false)
+                        ->fontFamily(FontFamily::Mono)
+                        ->color('primary')
+                        ->alignment(Alignment::Center),
+                    TextColumn::make('imdb_rating')
+                        ->sortable()
+                        ->color('rose')
+                        ->weight(FontWeight::Bold)
+                        ->alignment(Alignment::Center),
                     ImageColumn::make('images.image')
+                        ->circular()
+                        ->stacked()
+                        ->wrap()
+                        ->alignment(Alignment::Center),
+                ])
+            
+
+
 
             ])
             ->filters([
@@ -96,7 +126,7 @@ class MovieResource extends Resource
             ImagesRelationManager::class,
             GenresRelationManager::class,
             CountriesRelationManager::class
-        
+
         ];
     }
 
