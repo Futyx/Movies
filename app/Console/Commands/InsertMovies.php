@@ -92,6 +92,7 @@ class InsertMovies extends Command
                 $createdCasts= Cast::create([
                     'name' => $cast->name,
                     'role' => $cast->role
+                    
                 ]);
                  foreach ($cast['actores'] as $actor){
 

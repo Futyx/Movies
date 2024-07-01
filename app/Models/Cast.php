@@ -20,6 +20,12 @@ class Cast extends Model
 
     public function actores(){
 
-        return $this->hasmany(Actor::class);
+        return $this->hasMany(Actor::class);
     }
+
+    public function movies(){
+
+        return $this->hasMany(MovieCast::class);
+    }
+
 }

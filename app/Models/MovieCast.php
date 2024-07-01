@@ -12,6 +12,9 @@ class MovieCast extends Model
     protected $guarded =['id'];
 
     public function casts(){
-        return $this->hasone(Cast::class, 'id', 'cast_id');
+        return $this->hasMany(Cast::class, 'id', 'cast_id');
+    }
+    public function movie(){
+        return $this->hasOne(Movie::class, 'id', 'cast_id');
     }
 }

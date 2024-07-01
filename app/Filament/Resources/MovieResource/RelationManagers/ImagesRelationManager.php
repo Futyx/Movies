@@ -32,7 +32,7 @@ class ImagesRelationManager extends RelationManager
         return $table
             ->recordTitleAttribute('images')
             ->columns([
-                ImageColumn::make('images'),
+                ImageColumn::make('image'),
             ])
             ->filters([
                 //
